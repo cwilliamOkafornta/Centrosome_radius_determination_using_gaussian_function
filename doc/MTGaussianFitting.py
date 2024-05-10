@@ -39,7 +39,7 @@ def gaussian(x, A, x0, sigma):
     return A * np.exp(-(x - x0)**2 / (2 * sigma**2))
 
 '''Fit the gaussian function on the MTs of spindle pole 1'''
-def fitGuassFuncPoleOne(Pole1_MTs_df):
+def fitGaussFuncPoleOne(Pole1_MTs_df):
     # compute the histogram for the MTs data of pole 1
     counts_p1, bin_edges_p1 = np.histogram(Pole1_MTs_df, bins='fd', density=True) # bins size adopts the Freedman Diaconis Estimator
     bin_centers_p1 = (bin_edges_p1[:-1] + bin_edges_p1[1:]) / 2 # determine the center of each bin of the histogram
@@ -63,7 +63,7 @@ def fitGuassFuncPoleOne(Pole1_MTs_df):
     return A_p1, x0_p1, sigma_p1, x_fit_p1, y_fit_p1, counts_p1, bin_edges_p1, bin_centers_p1
 
 '''Fit the gaussian function on the MTs of spindle pole 2'''
-def fitGuassFuncPoleTwo(Pole2_MTs_df):
+def fitGaussFuncPoleTwo(Pole2_MTs_df):
     # compute the histogram for the MTs data of pole 2
     counts_p2, bin_edges_p2 = np.histogram(Pole2_MTs_df, bins='fd', density=True) # bins size adopts the Freedman Diaconis Estimator
     bin_centers_p2 = (bin_edges_p2[:-1] + bin_edges_p2[1:]) / 2 # determine the center of each bin of the histogram
@@ -179,7 +179,7 @@ def plotHistogram(pole1_x_fit, pole1_y_fit, pole1_counts, pole1_bin_edges, pole1
     plt.savefig(os.path.join(save_folder, plot_filename+'.png'), dpi=300, bbox_inches='tight')
     plt.savefig(os.path.join(save_folder, plot_filename+'.svg'), dpi=300, bbox_inches='tight')
     
-def GuassianFitHistoPlot(folder_input, 
+def GaussianFitHistoPlot(folder_input, 
                          file_input, 
                          csvfilename, 
                          save_folder, 
@@ -217,22 +217,22 @@ def GuassianFitHistoPlot(folder_input,
     filetoanalyze = fileLoader(folder_input, file_input, csvfilename,) 
     Pole1_MTs_df = poleOneMTsDF(filetoanalyze, columnname1, Pole1_MT_id1, Pole1_MT_id2) # pole dataframe 
     Pole2_MTs_df = poleTwoMTsDF(filetoanalyze, columnname2, Pole2_MT_id1, Pole2_MT_id2) # pole 2 dataframe 
-    pole1_max_amplitude = fitGuassFuncPoleOne(Pole1_MTs_df)[0] 
-    pole1_peak_center = fitGuassFuncPoleOne(Pole1_MTs_df)[1] 
-    pole1_peak_width = fitGuassFuncPoleOne(Pole1_MTs_df)[2] 
-    pole1_x_fit = fitGuassFuncPoleOne(Pole1_MTs_df)[3] 
-    pole1_y_fit = fitGuassFuncPoleOne(Pole1_MTs_df)[4] 
-    pole1_counts = fitGuassFuncPoleOne(Pole1_MTs_df)[5] 
-    pole1_bin_edges = fitGuassFuncPoleOne(Pole1_MTs_df)[6] 
-    pole1_bin_centers = fitGuassFuncPoleOne(Pole1_MTs_df)[7] 
-    pole2_max_amplitude = fitGuassFuncPoleTwo(Pole2_MTs_df)[0] 
-    pole2_peak_center = fitGuassFuncPoleTwo(Pole2_MTs_df)[1] 
-    pole2_peak_width = fitGuassFuncPoleTwo(Pole2_MTs_df)[2] 
-    pole2_x_fit = fitGuassFuncPoleTwo(Pole2_MTs_df)[3] 
-    pole2_y_fit = fitGuassFuncPoleTwo(Pole2_MTs_df)[4] 
-    pole2_counts = fitGuassFuncPoleTwo(Pole2_MTs_df)[5] 
-    pole2_bin_edges = fitGuassFuncPoleTwo(Pole2_MTs_df)[6] 
-    pole2_bin_centers = fitGuassFuncPoleTwo(Pole2_MTs_df)[7] 
+    pole1_max_amplitude = fitGaussFuncPoleOne(Pole1_MTs_df)[0] 
+    pole1_peak_center = fitGaussFuncPoleOne(Pole1_MTs_df)[1] 
+    pole1_peak_width = fitGaussFuncPoleOne(Pole1_MTs_df)[2] 
+    pole1_x_fit = fitGaussFuncPoleOne(Pole1_MTs_df)[3] 
+    pole1_y_fit = fitGaussFuncPoleOne(Pole1_MTs_df)[4] 
+    pole1_counts = fitGaussFuncPoleOne(Pole1_MTs_df)[5] 
+    pole1_bin_edges = fitGaussFuncPoleOne(Pole1_MTs_df)[6] 
+    pole1_bin_centers = fitGaussFuncPoleOne(Pole1_MTs_df)[7] 
+    pole2_max_amplitude = fitGaussFuncPoleTwo(Pole2_MTs_df)[0] 
+    pole2_peak_center = fitGaussFuncPoleTwo(Pole2_MTs_df)[1] 
+    pole2_peak_width = fitGaussFuncPoleTwo(Pole2_MTs_df)[2] 
+    pole2_x_fit = fitGaussFuncPoleTwo(Pole2_MTs_df)[3] 
+    pole2_y_fit = fitGaussFuncPoleTwo(Pole2_MTs_df)[4] 
+    pole2_counts = fitGaussFuncPoleTwo(Pole2_MTs_df)[5] 
+    pole2_bin_edges = fitGaussFuncPoleTwo(Pole2_MTs_df)[6] 
+    pole2_bin_centers = fitGaussFuncPoleTwo(Pole2_MTs_df)[7] 
     x2_fit_value_pole1, x2_fit_value_pole2, pole1_half_maximum, pole2_half_maximum = half_max(pole1_y_fit, pole1_x_fit, pole1_max_amplitude, pole2_y_fit, pole2_x_fit, pole2_max_amplitude)
     # x1_fit_value_pole1, x2_fit_value_pole1, x1_fit_value_pole2, x2_fit_value_pole2 = FWHM(pole1_peak_center, pole1_peak_width, pole2_peak_center, pole2_peak_width)
 
