@@ -1,7 +1,5 @@
-# Centrosome_radius_determination_using_gaussian_function
+### <h1 align="center">** Centrosome radius determination using gaussian function **</h1>
 Centrosome radius determination from a typical mitotic spindle
-
-### <h1 align="center">**Gaussian fit function for microtubules' minus end distance to the centriole**</h1>
 
 This script is use to call a pre-written library script that compute for the gaussian fit function on a histogram plot microtubules minus end distance to the center of each spindle pole (centriole). The aim is to determine the radius of the centrosome which corresponds with the second value ($x2$) on the x-axis intercept with y-axis when the value on y-axis is at half the maximum peak height of the gaussian peak.
 
