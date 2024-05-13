@@ -7,7 +7,7 @@ authors:
 - family-names: "Vogel"
   given-names: "Martin"
 - family-names: "Poddar"
-given-names: "Aayush"
+  given-names: "Aayush"
 title: "Centrosome_radius_determination_using_gaussian_function"
 version: 1.0.0
 date-released: 2024-05-13
