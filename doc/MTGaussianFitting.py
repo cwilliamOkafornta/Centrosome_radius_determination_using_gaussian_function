@@ -41,7 +41,7 @@ def gaussian(x, A, x0, sigma):
 '''Fit the gaussian function on the MTs of spindle pole 1'''
 def fitGaussFuncPoleOne(Pole1_MTs_df):
     # compute the histogram for the MTs data of pole 1
-    counts_p1, bin_edges_p1 = np.histogram(Pole1_MTs_df, bins='fd', density=True) # bins size adopts the Freedman Diaconis Estimator
+    counts_p1, bin_edges_p1 = np.histogram(Pole1_MTs_df, bins='fd', density=False) # bins size adopts the Freedman Diaconis Estimator
     bin_centers_p1 = (bin_edges_p1[:-1] + bin_edges_p1[1:]) / 2 # determine the center of each bin of the histogram
 
     # initial guess values for the guassian parameters; A, x0, and sigma
@@ -65,7 +65,7 @@ def fitGaussFuncPoleOne(Pole1_MTs_df):
 '''Fit the gaussian function on the MTs of spindle pole 2'''
 def fitGaussFuncPoleTwo(Pole2_MTs_df):
     # compute the histogram for the MTs data of pole 2
-    counts_p2, bin_edges_p2 = np.histogram(Pole2_MTs_df, bins='fd', density=True) # bins size adopts the Freedman Diaconis Estimator
+    counts_p2, bin_edges_p2 = np.histogram(Pole2_MTs_df, bins='fd', density=False) # bins size adopts the Freedman Diaconis Estimator
     bin_centers_p2 = (bin_edges_p2[:-1] + bin_edges_p2[1:]) / 2 # determine the center of each bin of the histogram
 
     # initial guess values for the guassian parameters; A, x0, and sigma
@@ -157,8 +157,8 @@ def plotHistogram(pole1_x_fit, pole1_y_fit, pole1_counts, pole1_bin_edges, pole1
     
     # Plot the histogram and the fit
     plt.figure(figsize=(6, 6))
-    plt.bar(pole1_bin_centers, pole1_counts, width=pole1_bin_edges[1] - pole1_bin_edges[0], color=pole1_hist_color, edgecolor='k', label=pole1_label)
-    plt.bar(pole2_bin_centers, pole2_counts, width=pole2_bin_edges[1] - pole2_bin_edges[0], color=pole2_hist_color, edgecolor='k', label=pole2_label)
+    plt.bar(pole1_bin_centers, pole1_counts, width=pole1_bin_edges[1] - pole1_bin_edges[0], color=pole1_hist_color, edgecolor='k', label=pole1_label, alpha=0.6)
+    plt.bar(pole2_bin_centers, pole2_counts, width=pole2_bin_edges[1] - pole2_bin_edges[0], color=pole2_hist_color, edgecolor='k', label=pole2_label, alpha=0.4)
     plt.plot(pole1_x_fit, pole1_y_fit, linewidth=3, label=pole1_fit_label, color=pole1_fit_line_color)
     plt.plot(pole2_x_fit, pole2_y_fit, linewidth=3, label=pole2_fit_label, color=pole2_fit_line_color)
     plt.vlines(x2_fit_value_pole1, 0, pole1_half_maximum, colors=pole1_vline_color, linestyles='dashed')
