@@ -1,3 +1,4 @@
+# library
 import os
 import pandas as pd
 import numpy as np
@@ -5,6 +6,7 @@ import matplotlib.pyplot as plt
 from numpy import exp, linspace
 from scipy.optimize import curve_fit
 
+# create a class for the computation function
 class MTGaussianFitting:
     def __init__(self, folder_input, file_input, csvfilename, save_folder, csvsavefilename):
         self.folder_input = folder_input
@@ -14,6 +16,7 @@ class MTGaussianFitting:
         self.csvsavefilename = csvsavefilename
         self.data_file = self.fileLoader()
 
+    '''load the input file(s)'''
     def fileLoader(self):
         data_file = []
         for file in self.file_input:
@@ -27,16 +30,19 @@ class MTGaussianFitting:
                 data_file.append(df)
         return data_file
 
+    '''extract the columns to be analysed from the DataFrame'''
     def poleMTsDF(self, columnname, Pole_MT_id1, Pole_MT_id2):
         df_table = self.data_file[0]
         df_table_pole = df_table[df_table['Fiber_Name'].str.contains(f'{Pole_MT_id1}|{Pole_MT_id2}')][[columnname]]
         df_pole = df_table_pole.reset_index(drop=True)
         return df_pole
 
+    '''define the gaussian function'''
     @staticmethod
     def gaussian(x, A, x0, sigma):
         return A * np.exp(-(x - x0)**2 / (2 * sigma**2))
 
+    '''fit the gaussian function on the data histogram'''
     def fitGaussFunc(self, MTs_df):
         counts, bin_edges = np.histogram(MTs_df, bins='fd', density=False)
         bin_centers = (bin_edges[:-1] + bin_edges[1:]) / 2
@@ -56,7 +62,7 @@ class MTGaussianFitting:
         y_fit = self.gaussian(x_fit, *popt)
         return A, x0, sigma, x_fit, y_fit, counts, bin_edges, bin_centers
 
-
+    '''determine the half-maximun value of the fitted curve and extract the corresponding values on x-axis'''
     @staticmethod
     def half_max(y_fit, x_fit, A):
         half_maximum = A / 2
@@ -70,6 +76,7 @@ class MTGaussianFitting:
         x2_fit_value = np.max(new_x_intercept_half_maximum)
         return x2_fit_value, half_maximum
 
+    '''extract the measured parameter from the previous functions and save as a new DataFrame'''
     def parameterTable(self, pole1_params, pole2_params):
         parameters_values_pole1 = pd.DataFrame.from_dict({
             'Maximum peak': pole1_params[0],
@@ -89,6 +96,7 @@ class MTGaussianFitting:
         parameter_df.index.names = ['Parameters']
         parameter_df.to_csv(os.path.join(self.save_folder, self.csvsavefilename + '.csv'), index=True, encoding='cp1252')
 
+    '''visualize the plot and save'''
     def plotHistogram(self, pole1_params, pole2_params, plot_params):
         pole1_x_fit, pole1_y_fit, pole1_counts, pole1_bin_edges, pole1_bin_centers = pole1_params[3:8]
         pole2_x_fit, pole2_y_fit, pole2_counts, pole2_bin_edges, pole2_bin_centers = pole2_params[3:8]
@@ -117,6 +125,7 @@ class MTGaussianFitting:
         plt.savefig(os.path.join(self.save_folder, plot_params['plot_filename'] + '.png'), dpi=300, bbox_inches='tight')
         plt.savefig(os.path.join(self.save_folder, plot_params['plot_filename'] + '.svg'), dpi=300, bbox_inches='tight')
 
+    '''call all the functions within the same class'''
     def GaussianFitHistoPlot(self, columnname1, Pole1_MT_id1, Pole1_MT_id2, columnname2, Pole2_MT_id1, Pole2_MT_id2, plot_params):
         Pole1_MTs_df = self.poleMTsDF(columnname1, Pole1_MT_id1, Pole1_MT_id2)
         Pole2_MTs_df = self.poleMTsDF(columnname2, Pole2_MT_id1, Pole2_MT_id2)
