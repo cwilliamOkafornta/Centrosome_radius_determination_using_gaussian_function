@@ -82,19 +82,20 @@ class MTGaussianFitting:
             'Maximum peak': pole1_params[0],
             'Mean center of peak': pole1_params[1],
             'Width of the peak': pole1_params[2],
-            'Radius of the centrosome': pole1_params[3],
+            'Radius of the centrosome': pole1_params[8],  # Use the single value of x2_fit_value
         }, orient='index', columns=['Pole1 (µm)'])
-
+    
         parameters_values_pole2 = pd.DataFrame.from_dict({
             'Maximum peak': pole2_params[0],
             'Mean center of peak': pole2_params[1],
             'Width of the peak': pole2_params[2],
-            'Radius of the centrosome': pole2_params[3],
+            'Radius of the centrosome': pole2_params[8],  # Use the single value of x2_fit_value
         }, orient='index', columns=['Pole 2 (µm)'])
-
+    
         parameter_df = pd.concat([parameters_values_pole1, parameters_values_pole2], axis=1, ignore_index=False)
         parameter_df.index.names = ['Parameters']
         parameter_df.to_csv(os.path.join(self.save_folder, self.csvsavefilename + '.csv'), index=True, encoding='cp1252')
+
 
     '''visualize the plot and save'''
     def plotHistogram(self, pole1_params, pole2_params, plot_params):
@@ -129,15 +130,16 @@ class MTGaussianFitting:
     def GaussianFitHistoPlot(self, columnname1, Pole1_MT_id1, Pole1_MT_id2, columnname2, Pole2_MT_id1, Pole2_MT_id2, plot_params):
         Pole1_MTs_df = self.poleMTsDF(columnname1, Pole1_MT_id1, Pole1_MT_id2)
         Pole2_MTs_df = self.poleMTsDF(columnname2, Pole2_MT_id1, Pole2_MT_id2)
-
+    
         pole1_params = self.fitGaussFunc(Pole1_MTs_df)
         pole2_params = self.fitGaussFunc(Pole2_MTs_df)
-
+    
         x2_fit_value_pole1, pole1_half_maximum = self.half_max(pole1_params[4], pole1_params[3], pole1_params[0])
         x2_fit_value_pole2, pole2_half_maximum = self.half_max(pole2_params[4], pole2_params[3], pole2_params[0])
-
-        pole1_params += (x2_fit_value_pole1, pole1_half_maximum)
-        pole2_params += (x2_fit_value_pole2, pole2_half_maximum)
-
+    
+        # Ensure x2_fit_value is a single value
+        pole1_params = pole1_params[:8] + (x2_fit_value_pole1, pole1_half_maximum)
+        pole2_params = pole2_params[:8] + (x2_fit_value_pole2, pole2_half_maximum)
+    
         self.parameterTable(pole1_params, pole2_params)
         self.plotHistogram(pole1_params, pole2_params, plot_params)
