@@ -1,3 +1,5 @@
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.15008974.svg)](https://doi.org/10.5281/zenodo.15008974)
+
 ### <h1 align="center">Centrosome radius determination using gaussian function</h1>
 Centrosome radius determination for a typical mitotic spindle
 
