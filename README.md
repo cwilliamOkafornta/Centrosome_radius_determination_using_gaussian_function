@@ -3,9 +3,9 @@
 ### <h1 align="center">Centrosome radius determination using gaussian function</h1>
 Centrosome radius determination for a typical mitotic spindle
 
-This script is use to call a pre-written library script that compute for the gaussian fit function on a histogram plot microtubules minus end distance to the center of each spindle pole (centriole). The aim is to determine the radius of the centrosome which corresponds with the second value ($x2$) on the x-axis intercept with y-axis when the value on y-axis is at half the maximum peak height of the gaussian peak.
+This script is used to call a pre-written library script that computes the Gaussian fit function on a histogram plot of microtubules minus end distance to the centre of each spindle pole (centriole). The aim is to determine the radius of the centrosome, which corresponds with the second value ($x2$) on the x-axis intercept with the y-axis when the value on the y-axis is at half the maximum peak height of the Gaussian peak.
 
-The gaussian function is computed using the following equation:
+The Gaussian function is computed using the following equation:
 
 # $f(x) = Ae^{\frac{-(x - x0)^2}{2σ^2}}$
 
@@ -23,9 +23,9 @@ This measures the width of the peak.
 
 ### **Instruction on how to run this script**
 
-To run this notebook successfully, this notebook must be in the same folder with the python file called **`MTGaussianFitting.py`** 
+To run this notebook successfully, this notebook must be in the same folder as the Python file called **`MTGaussianFitting.py`** 
 
-The file input and output folder(s) should be define in the second cell of this notebook. Also, the name of the input `.csv` file to be  should be added correctly in the third cell of this notebook. It is important to know that all the imported libraries used in this code should be correctly install in a created python environment. The following lines can be used to install the required libraries to run this notebook:
+The file input and output folder(s) should be defined in the second cell of this notebook. Also, the name of the input `.csv` file should be added correctly in the third cell of this notebook. It is important to know that all the imported libraries used in this code should be correctly installed in a created Python environment. The following lines can be used to install the required libraries to run this notebook:
 
 * **Jupyter lab**
 `conda install -c conda-forge jupyterlab`
